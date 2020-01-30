@@ -1,3 +1,5 @@
+import components.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -14,13 +16,16 @@ public class RegexGUI implements ActionListener {
     JTextArea text_area;
 
     public RegexGUI() {
+        //Create frame of GUI
         frame = new JFrame("Regex GUI");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400,400);
 
+        //Add textbox for input text
         text_box = new TextBox();
         frame.getContentPane().add(BorderLayout.CENTER, text_box.getScroll());
 
+        //Add bottom panel for commands
         bottom = new BottomPanel("Regex:", "Format:", "Go");
         bottom.getButton().addActionListener(this);
         frame.getContentPane().add(BorderLayout.PAGE_END, bottom.getPanel());
@@ -29,10 +34,11 @@ public class RegexGUI implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-
+        //Get regex command and input text to peform it on
         String re_pattern = bottom.getRegexString();
         String re_string = text_box.getText();
 
+        //Get matches to regex
         Pattern p = Pattern.compile(re_pattern);
         Matcher m = p.matcher(re_string);
 
@@ -44,16 +50,18 @@ public class RegexGUI implements ActionListener {
                 groups[i] = m.group(i);
             }
             matches.add(groups);
-
         }
 
+        //Define a language from the format command
         LanguageFormat l_format = new LanguageFormat("([^=\\\\]*)\\\\(\\d)");
-
         String format_string = bottom.getFormatString();
         l_format.setMatcher(format_string);
         l_format.translateLanguage();
+
+        //Apply language rules to regex matches
         String new_text = l_format.printWithFormat(matches);
 
+        //Return results, replacing input
         text_box.setText(new_text);
 
     }
