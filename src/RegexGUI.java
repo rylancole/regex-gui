@@ -8,6 +8,15 @@ import java.util.regex.*;
 import java.util.List;
 import java.util.ArrayList;
 
+/*
+ * RegexGUI
+ *  -GUI for reformatting blocks of text
+ *  -Takes input text and two commands; regex and format
+ *  -Regex command: finds matching groups in input text
+ *  -Format command: rewrites groups in given format, defined
+ *  by FluffCalls
+ */
+
 public class RegexGUI implements ActionListener {
 
     JFrame frame;
@@ -15,6 +24,7 @@ public class RegexGUI implements ActionListener {
     TextBox text_box;
     JTextArea text_area;
 
+    //Constructor
     public RegexGUI() {
         //Create frame of GUI
         frame = new JFrame("Regex GUI");
@@ -33,6 +43,7 @@ public class RegexGUI implements ActionListener {
         frame.setVisible(true);
     }
 
+    //Action Listener for 'Go' button
     public void actionPerformed(ActionEvent e) {
         //Get regex command and input text to peform it on
         String re_pattern = bottom.getRegexString();

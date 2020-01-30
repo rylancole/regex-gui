@@ -11,20 +11,32 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 
+/*
+ * TextBox
+ *  -Object utilized for text input
+ *  -Can be written into, or have a file dragged
+ *  and dropped onto it to write out file's text
+ *  -Line wrapping and scrolling enabled
+ */
+
 public class TextBox {
 
     private JTextArea input_field;
     private JScrollPane scroll;
 
+    //Constructor
     public TextBox() {
+        //Create text area with line wrap enabled
         input_field = new JTextArea(20, 50);
         input_field.setLineWrap(true);
 
-        //TODO: allow dropped files to input commands
-        //TODO: fix warnings
+        //Activate ability to have file drag and drop
+        //Shamelessly stolen from StackOverflow
         input_field.setDropTarget(new DropTarget() {
             public synchronized void drop(DropTargetDropEvent evt) {
                 try {
+                    //TODO: allow dropped files to input commands
+                    //TODO: fix warnings
                     evt.acceptDrop(DnDConstants.ACTION_COPY);
                     List<File> droppedFiles = (List<File>)
                         evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
@@ -43,9 +55,11 @@ public class TextBox {
             }
         });
 
+        //Enable scrolling and complete creation TextBox object
         scroll = new JScrollPane(input_field);
     }
 
+    //Getters and Setters
     public JScrollPane getScroll() {
         return this.scroll;
     }
@@ -57,10 +71,5 @@ public class TextBox {
     public String getText() {
         return this.input_field.getText();
     }
-
-
-
-
-
 
 }
